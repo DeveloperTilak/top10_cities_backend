@@ -5,7 +5,8 @@ const mongoose = require("mongoose")
 const citySchema = mongoose.Schema(
     {
         name:{type: String},
-        description: {type: String}
+        description: {type: String},
+        img: {type:String}
     }
 )
 
