@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 
-const allowedOrigins = ['http://localhost:3000', 'https://example2.com'];
+const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:5173/'];
 
 const corsOptions = {
   origin: allowedOrigins,
