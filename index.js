@@ -1,17 +1,43 @@
 const express = require("express");
+const cors = require('cors')
+
 const { connect } = require("./config/db");
 const { CityModel } = require("./model/description.model");
 
 const app = express();
 app.use(express.json());
 
-app.get("/cities", (req, res) => {
-  res.send("This is homepage.");
+
+const allowedOrigins = ['http://localhost:3000', 'https://example2.com'];
+
+const corsOptions = {
+  origin: allowedOrigins,
+  optionsSuccessStatus: 200,  
+};
+
+//CORS middleware to allow specified options
+app.use(cors(corsOptions));
+
+
+
+
+app.get("/cities", async (req, res) => {
+  try {
+
+    const cities = await CityModel.find({})
+
+    res.status(200).send(cities);
+  } catch (error) {
+    console.log("Error while getting the data from db.");
+    res
+      .status(500)
+      .send({ message: "Error while getting the data from db.", error: error });
+  }
 });
 
 app.post("/cities/add", async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const new_city = new CityModel(req.body);
 
     await new_city.save();
